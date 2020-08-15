@@ -4,9 +4,13 @@ const gravatar = require("gravatar")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const passport = require('passport')
+const {check, validationResult} = require("express-validator");
 
 // Load user model
 const User = require("../../models/User")
+
+// Load input validation
+const validateRegisterInput = require("../../validations/register")
 
 
 // @route   GET api/users/test
@@ -18,12 +22,18 @@ router.get("/test", (req, res) => res.json({message: "users Works"}))
 // @desc    Register User
 // @access  Public
 router.post("/register", (req, res) => {
+    // destructing validate
+    const { errors , isValid} = validateRegisterInput(req.body)
+
+    // check Validation
+    if(!isValid){
+         return res.status(400).json(errors)}
+ 
     User.findOne({email: req.body.email})
         .then(user => {
             if(user){
-                return res.status(400).json({
-                    error: "Email already exist"
-                })
+                errors.email = "Email already exist"
+                return res.status(400).json(errors)
             }
                 const avatar = gravatar.url(req.body.email, {
                     s: "200", //Size
