@@ -6,6 +6,7 @@ const dotenv = require('dotenv')
 // const consign = require("consign");
 const path = require("path")
 const connectDB = require("./db/connection")
+const passport = require('passport')
 
 // importing our routers
 const users = require("./routes/api/users")
@@ -34,6 +35,11 @@ app.use(bodyParser.json())
 //     .then("db")
 //     .into(app)
 
+// passport middleware
+app.use(passport.initialize())
+
+// Passport config
+require("./config/passport")(passport)
 
 // use routes
 app.use("/api/users", users)
