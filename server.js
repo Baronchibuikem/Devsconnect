@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const dotenv = require('dotenv')
 // const consign = require("consign");
-const path = require("path")
+// const path = require("path")
 const connectDB = require("./db/connection")
 const passport = require('passport')
 
