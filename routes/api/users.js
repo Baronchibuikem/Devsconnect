@@ -4,7 +4,6 @@ const gravatar = require("gravatar")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const passport = require('passport')
-const {check, validationResult} = require("express-validator");
 
 // Load user model
 const User = require("../../models/User")
@@ -25,18 +24,19 @@ router.get("/test", (req, res) => res.json({message: "users Works"}))
 router.post("/register", (req, res) => {
     // destructing validate
     const { errors , isValid} = validateRegisterInput(req.body)
-
     // check Validation
     if(!isValid){
-         return res.status(400).json(errors)}
+        return res.status(400).json(errors)
+    }
+    const email = req.body.email
  
-    User.findOne({email: req.body.email})
+    User.findOne({email})
         .then(user => {
             if(user){
                 errors.email = "Email already exist"
                 return res.status(400).json(errors)
             }
-                const avatar = gravatar.url(req.body.email, {
+                const avatar = gravatar.url(email, {
                     s: "200", //Size
                     r: "pg", //Rating
                     d: "mm" //Default
@@ -51,7 +51,7 @@ router.post("/register", (req, res) => {
                 // hashing the password before saving
                 bcrypt.genSalt(10, (err, salt)=> {
                     console.log(newUser, salt)
-                    bcrypt.hash(newUser.passsword, salt, (err, hash)=> {
+                    bcrypt.hash(newUser.password, salt, (err, hash)=> {
                         if(err) throw new Error(err);
                         // if no error, we set the password to the hash password
                         newUser.passsword = hash
@@ -70,23 +70,28 @@ router.post("/register", (req, res) => {
 // @desc    Login User / Returning JWT token
 // @access  Public
 router.post("/login", (req, res)=>{
+    console.log("Login clicked")
     // destructing validate
-    const { errors , isValid} = validateLoginInput(req.body)
-
+    const { errors, isValid} = validateLoginInput(req.body)
     // check Validation
     if(!isValid){
-            return res.status(400).json(errors)}
+        return res.status(400).json(errors)
+    }
+            
+    // const email = req.body.email
+    // const password = req.body.password
+    const { email, password } = req.body
 
-    const email = req.body.email
-    const password = req.body.password
+    console.log("req email", req.body.email)
+    console.log("request email", req.body.password)
+    console.log("email", email)
     
-
     // find user by email
     User.findOne({email})
-        .then(user=>{
+        .then(user => {
             // check for user
             if(!user){
-            errors.email = "User not found"
+                errors.email = "User not found"
                 return res.status(404).json(errors)
             }
             // check password
@@ -94,7 +99,6 @@ router.post("/login", (req, res)=>{
                 .then(isMatch => {
                     if(isMatch){
                         // User Matched
-
                         const payload = {id: user.id, name: user.name, avatar: user.avatar} //Create jwt payload
                         // Sign Token
                         jwt.sign(
