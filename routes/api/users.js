@@ -21,48 +21,37 @@ router.get("/test", (req, res) => res.json({message: "users Works"}))
 // @route   GET api/users/registration
 // @desc    Register User
 // @access  Public
-router.post("/register", (req, res) => {
-    // destructing validate
+router.post("/register", async (req, res) => {
+    // destructing validateRegisterInput
     const { errors , isValid} = validateRegisterInput(req.body)
     // check Validation
     if(!isValid){
         return res.status(400).json(errors)
     }
-    const email = req.body.email
- 
-    User.findOne({email})
-        .then(user => {
-            if(user){
-                errors.email = "Email already exist"
-                return res.status(400).json(errors)
-            }
-                const avatar = gravatar.url(email, {
-                    s: "200", //Size
-                    r: "pg", //Rating
-                    d: "mm" //Default
-                })
-                const newUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    avatar,
-                    password: req.body.password
-                });
+    // check if email already exist
+    let user = await User.findOne({
+        email: req.body.email
+      });
+    if (user) return res.status(400).send("Email already exists")
+    else
+    avatar = gravatar.url(req.body.email, {
+        s: "200", //Size
+        r: "pg", //Rating
+        d: "mm" //Default
+    })
+    user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    avatar,
+    password: req.body.password
+    });
+    // hash the password
+    const salt = await bcrypt.genSalt(20);
+    user.password = await bcrypt.hash(user.password, salt);
+    await user.save();
+    res.json({user});
 
-                // hashing the password before saving
-                bcrypt.genSalt(10, (err, salt)=> {
-                    console.log(newUser, salt)
-                    bcrypt.hash(newUser.password, salt, (err, hash)=> {
-                        if(err) throw new Error(err);
-                        // if no error, we set the password to the hash password
-                        newUser.passsword = hash
-                        // we save the user
-                        newUser.save()
-                            .then(user => {res.json(user)})
-                            .catch(err => console.log(err))
-                    })
-                })
-            }
-        )
+           
 })
 
 
@@ -78,13 +67,7 @@ router.post("/login", (req, res)=>{
         return res.status(400).json(errors)
     }
             
-    // const email = req.body.email
-    // const password = req.body.password
     const { email, password } = req.body
-
-    console.log("req email", req.body.email)
-    console.log("request email", req.body.password)
-    console.log("email", email)
     
     // find user by email
     User.findOne({email})
