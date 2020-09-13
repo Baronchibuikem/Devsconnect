@@ -1,0 +1,52 @@
+# For making a post request to login a user
+POST http://localhost:5000/api/users/login
+content-type: application/json
+
+{
+    "email": "baronchibuike@gmail.com",
+    "password": "admin12345"
+}
+
+###
+
+# For making a post request to register a new user
+POST http://localhost:5000/api/users/register
+content-type: application/json
+
+{
+    "email": "favour@gmail.com",
+    "name": "favour",
+    "password": "admin12345",
+    "password2": "admin12345"
+}
+
+###
+
+# for making a get request to get the current logged in user
+GET http://localhost:5000/api/users/current
+content-type: application/json
+
+###
+
+# For making a post request to the profile route
+POST http://localhost:5000/api/profile
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUwM2QyZTJmZTg5MWY5MGE0ZjJiMiIsIm5hbWUiOiJiYXJvbiIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMDcwZTcwN2I0OGYzYjE3OWYyNTY5OTk5YWUzMDA5MmQ_cz0yMDAmcj1wZyZkPW1tIiwiaWF0IjoxNjAwMDAyNzAxLCJleHAiOjE2MDAwMDYzMDF9.sQuv_XPm-RmOgw4Lf5L7rqepgM-wePaM-x7vRhB5l6A
+
+{
+    "handle": "baron",
+    "status": "Developer",
+    "skills": "Python, Javascript",
+    "location": "Abuja",
+    "company": "E4e",
+    "website": "awesomebaron.herokuapp.com",
+    "twitter": "twitter.com/baronchibuikem",
+    "facebook": "facebook.com/anoziechibuikem"
+}
+
+###
+
+# For making a get request to the profile route
+GET http://localhost:5000/api/profile
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUwM2QyZTJmZTg5MWY5MGE0ZjJiMiIsIm5hbWUiOiJiYXJvbiIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMDcwZTcwN2I0OGYzYjE3OWYyNTY5OTk5YWUzMDA5MmQ_cz0yMDAmcj1wZyZkPW1tIiwiaWF0IjoxNjAwMDAyNzAxLCJleHAiOjE2MDAwMDYzMDF9.sQuv_XPm-RmOgw4Lf5L7rqepgM-wePaM-x7vRhB5l6A

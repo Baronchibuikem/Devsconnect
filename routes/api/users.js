@@ -58,28 +58,23 @@ router.post("/register", async (req, res) => {
 // @route   GET api/users/login
 // @desc    Login User / Returning JWT token
 // @access  Public
-router.post("/login", (req, res)=>{
-    console.log("Login clicked")
+router.post("/login", async (req, res) => {
     // destructing validate
     const { errors, isValid} = validateLoginInput(req.body)
     // check Validation
     if(!isValid){
         return res.status(400).json(errors)
-    }
-            
+    }       
     const { email, password } = req.body
-    
     // find user by email
-    User.findOne({email})
-        .then(user => {
+    await User.findOne({email}).then(user => {
             // check for user
             if(!user){
-                errors.email = "User not found"
-                return res.status(404).json(errors)
+                // errors.email = "User not found"
+                return res.status(404).json({emailnotfound: "Email not found"})
             }
             // check password
-            bcrypt.compare(password, user.password)
-                .then(isMatch => {
+            bcrypt.compare(password, user.password).then(isMatch => {
                     if(isMatch){
                         // User Matched
                         const payload = {id: user.id, name: user.name, avatar: user.avatar} //Create jwt payload
@@ -94,8 +89,8 @@ router.post("/login", (req, res)=>{
                              })
                         })
                     }else{
-                        errors.password ="Password incorrect"
-                        return res.status(400).json(errors)
+                        // errors.password ="Password incorrect"
+                        return res.status(400).json({passwordincorrect: "Password Incorrect"})
                     }
                 })
         })

@@ -28,6 +28,7 @@ router.get("/test", (req, res) => {
 router.get("/", passport.authenticate('jwt', {session:false}), (req, res) => {
     const errors = {}
     Profile.findOne({ user : req.user.id})
+        .populate("user", ["name","avatar"])
         .then(profile => {
             if(!profile){
                 errors.noprofile = "There is no profile for this user"
@@ -43,8 +44,6 @@ router.get("/", passport.authenticate('jwt', {session:false}), (req, res) => {
 // @desc    Create user profile
 // @access  Private
 router.post("/", passport.authenticate('jwt', {session:false}), (req, res) => {
-
-    console.log(req.body)
     const {errors, isValid} = validateProfileInput(req.body)
 
     // check validations
@@ -94,7 +93,7 @@ router.post("/", passport.authenticate('jwt', {session:false}), (req, res) => {
         .then(profile => {
             if(profile){
                 // update
-                profile.findOneAndUpdate({user: req.user.id}, {$set : profileFields}, {new: true})
+                Profile.findOneAndUpdate({user: req.user.id}, {$set : profileFields}, {new: true})
                 .then(profile => res.json(profile))
             } else {
                 // Create
