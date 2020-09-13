@@ -3,7 +3,7 @@ POST http://localhost:5000/api/users/login
 content-type: application/json
 
 {
-    "email": "baronchibuike@gmail.com",
+    "email": "favour@gmail.com",
     "password": "admin12345"
 }
 
@@ -14,8 +14,8 @@ POST http://localhost:5000/api/users/register
 content-type: application/json
 
 {
-    "email": "favour@gmail.com",
-    "name": "favour",
+    "email": "andy@gmail.com",
+    "name": "andy",
     "password": "admin12345",
     "password2": "admin12345"
 }
@@ -50,3 +50,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUwM2QyZ
 GET http://localhost:5000/api/profile
 Content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUwM2QyZTJmZTg5MWY5MGE0ZjJiMiIsIm5hbWUiOiJiYXJvbiIsImF2YXRhciI6Ii8vd3d3LmdyYXZhdGFyLmNvbS9hdmF0YXIvMDcwZTcwN2I0OGYzYjE3OWYyNTY5OTk5YWUzMDA5MmQ_cz0yMDAmcj1wZyZkPW1tIiwiaWF0IjoxNjAwMDAyNzAxLCJleHAiOjE2MDAwMDYzMDF9.sQuv_XPm-RmOgw4Lf5L7rqepgM-wePaM-x7vRhB5l6A
+
+###
+
+# for getting a single user by handle name
+GET http://localhost:5000/api/profile/handle/baron
+Content-type: application/json
+
+###
+
+# for getting a single user by user_id
+GET http://localhost:5000/api/profile/user/5f5e03d2e2fe891f90a4f2b2
+Content-type: application/json
+
+###
+# for getting a single user by user_id
+GET http://localhost:5000/api/profile/all
+Content-type: application/json

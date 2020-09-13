@@ -11,6 +11,7 @@ const User = require("../../models/User")
 // Load input validation
 const validateRegisterInput = require("../../validations/register")
 const validateLoginInput = require("../../validations/login")
+const Profile = require("../../models/Profile")
 
 
 // @route   GET api/users/test
@@ -34,15 +35,15 @@ router.post("/register", async (req, res) => {
       });
     if (user) return res.status(400).send("Email already exists")
     else
-    avatar = gravatar.url(req.body.email, {
-        s: "200", //Size
-        r: "pg", //Rating
-        d: "mm" //Default
-    })
+    // avatar = gravatar.url(req.body.email, {
+    //     s: "200", //Size
+    //     r: "pg", //Rating
+    //     d: "mm" //Default
+    // })
     user = new User({
     name: req.body.name,
     email: req.body.email,
-    avatar,
+    // avatar,
     password: req.body.password
     });
     // hash the password
@@ -77,7 +78,10 @@ router.post("/login", async (req, res) => {
             bcrypt.compare(password, user.password).then(isMatch => {
                     if(isMatch){
                         // User Matched
-                        const payload = {id: user.id, name: user.name, avatar: user.avatar} //Create jwt payload
+                        const payload = {id: user.id, 
+                            name: user.name, 
+                            // avatar: user.avatar
+                        } //Create jwt payload
                         // Sign Token
                         jwt.sign(
                             payload, 
@@ -107,6 +111,8 @@ router.get("/current", passport.authenticate('jwt', {session: false}), (req, res
         email: req.user.email
     })
 })
+
+
 
 
 module.exports = router
