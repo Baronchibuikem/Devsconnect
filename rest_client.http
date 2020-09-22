@@ -3,7 +3,7 @@ POST http://localhost:5000/api/users/login
 content-type: application/json
 
 {
-    "email": "favour@gmail.com",
+    "email": "mike@gmail.com",
     "password": "admin12345"
 }
 
@@ -14,8 +14,8 @@ POST http://localhost:5000/api/users/register
 content-type: application/json
 
 {
-    "email": "andy@gmail.com",
-    "name": "andy",
+    "email": "mike@gmail.com",
+    "name": "micheal",
     "password": "admin12345",
     "password2": "admin12345"
 }
@@ -31,7 +31,7 @@ content-type: application/json
 # For making a post request to the profile route
 POST http://localhost:5000/api/profile
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUxNTYzYjY1YjhiMDI4Y2EzMzZiMyIsIm5hbWUiOiJmYXZvdXIiLCJpYXQiOjE2MDAwMTI4MjgsImV4cCI6MTYwMDAxNjQyOH0.RQfBqHL64bO_9flMd62MX6fjfDzzkKXaWH-gPf7dxAM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWYyN2MyMmU1MWViMGU3MDAxMzVjYSIsIm5hbWUiOiJtaWNoZWFsIiwiaWF0IjoxNjAwODAzODk5LCJleHAiOjE2MDE0MDg2OTl9.0OOqx4MVIYbsv2nPxLlSttm6ZE1wure1v9EBRDQDf4k
 
 {
     "handle": "favouristic",
@@ -110,3 +110,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUxNTYzY
 DELETE http://localhost:5000/api/profile/education/5f5e4e8015aca4225803473f
 Content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUxNTYzYjY1YjhiMDI4Y2EzMzZiMyIsIm5hbWUiOiJmYXZvdXIiLCJpYXQiOjE2MDAwMTgxNzksImV4cCI6MTYwMDYyMjk3OX0.mBATJnVHMUp8TWQ3MfgPTnLWXkKw2xQNiSt0RoPN5Qo
+
+###
+
+# For deleting a single education from list of users education
+DELETE http://localhost:5000/api/profile/
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWUxNTYzYjY1YjhiMDI4Y2EzMzZiMyIsIm5hbWUiOiJmYXZvdXIiLCJpYXQiOjE2MDAwMTgxNzksImV4cCI6MTYwMDYyMjk3OX0.mBATJnVHMUp8TWQ3MfgPTnLWXkKw2xQNiSt0RoPN5Qo
+
+
+###
+
+# For posting a Post 
+POST http://localhost:5000/api/posts/
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWYyN2MyMmU1MWViMGU3MDAxMzVjYSIsIm5hbWUiOiJtaWNoZWFsIiwiaWF0IjoxNjAwODAzODk5LCJleHAiOjE2MDE0MDg2OTl9.0OOqx4MVIYbsv2nPxLlSttm6ZE1wure1v9EBRDQDf4k
+
+{
+    "text": "I hate my job and i want to leave as soon as i can",
+}
