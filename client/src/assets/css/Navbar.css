@@ -1,0 +1,10 @@
+.poll:hover {
+  background-color: white !important;
+}
+.pollhover:hover {
+  cursor: pointer;
+  color: blue;
+}
+.MuiDrawer-paper {
+  background-color: darkgreen !important;
+}

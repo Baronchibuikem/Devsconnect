@@ -62,7 +62,9 @@ router.post("/login", (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  const { email, password } = req.body;
+  const email = req.body.email;
+  const password = req.body.password;
+
   // find user by email
   User.findOne({ email }).then((user) => {
     // check for user
