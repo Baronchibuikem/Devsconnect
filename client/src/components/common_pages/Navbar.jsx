@@ -133,9 +133,7 @@ export default function Navbar() {
         <Typography variant="h6" className="mr-auto ml-3">
           Welcome to Developer Connect (DevCon)
         </Typography>
-        <Button color="inherit" variant="h6">
-          Login
-        </Button>
+        <Typography variant="h6">Best community(Devs)</Typography>
       </Toolbar>
     </AppBar>
   );
