@@ -83,6 +83,7 @@ export default function Navbar() {
       ) : (
         <div className="mt-5">
           <Link
+            exact
             to="/register"
             className="pollhover text-light text-decoration-none"
           >
@@ -106,7 +107,7 @@ export default function Navbar() {
   );
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar style={{ backgroundColor: "green" }}>
         {["left"].map((anchor) => (
           <React.Fragment key={anchor}>
@@ -130,10 +131,12 @@ export default function Navbar() {
             </Drawer>
           </React.Fragment>
         ))}
-        <Typography variant="h6" className="mr-auto ml-3">
+        <Typography variant="h6" className="mr-auto ml-3 content-size">
           Welcome to Developer Connect (DevCon)
         </Typography>
-        <Typography variant="h6">Best community(Devs)</Typography>
+        {/* <Typography variant="h6" class="d-sm-none">
+          Best community(Devs)
+        </Typography> */}
       </Toolbar>
     </AppBar>
   );

@@ -8,3 +8,11 @@
 .MuiDrawer-paper {
   background-color: darkgreen !important;
 }
+@media (max-width: 600px) {
+  .ml-5 {
+    margin-left: 0px !important;
+  }
+  .content-size {
+    font-size: 13px !important;
+  }
+}

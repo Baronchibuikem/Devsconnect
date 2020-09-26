@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: "33.33%",
+    // flexBasis: "33.33%",
     flexShrink: 0,
     color: "white",
   },
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Register() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -55,18 +55,42 @@ export default function Login() {
     >
       <Card
         className={classes.root}
-        className="container col-md-4 py-5 col-sm-12"
+        className="container col-md-4 py-5 col-sm-12 sm-screen"
       >
         <CardContent>
           <Typography
             class="text-uppercase text-center font-weight-bold"
             style={{ fontSize: "20px" }}
           >
-            Sign In
+            Sign up
           </Typography>
+          {/* Enter your fullname */}
           <Accordion
             expanded={expanded === "panel3"}
             onChange={handleChange("panel3")}
+            className={classes.paddingBottom}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel3bh-content"
+              id="panel3bh-header"
+              className={classes.backgroundColor}
+            >
+              <Typography className={classes.heading}>Full Name</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <TextField
+                id="outlined-basic"
+                label="Enter your fullname here"
+                variant="outlined"
+                className={classes.root}
+              />
+            </AccordionDetails>
+          </Accordion>
+          {/* Enter your email */}
+          <Accordion
+            expanded={expanded === "panel5"}
+            onChange={handleChange("panel5")}
             className={classes.paddingBottom}
           >
             <AccordionSummary
@@ -86,9 +110,11 @@ export default function Login() {
               />
             </AccordionDetails>
           </Accordion>
+          {/* Enter your password */}
           <Accordion
             expanded={expanded === "panel4"}
             onChange={handleChange("panel4")}
+            className={classes.paddingBottom}
           >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -106,7 +132,31 @@ export default function Login() {
                 className={classes.root}
               />
             </AccordionDetails>
-          </Accordion>{" "}
+          </Accordion>
+          {/* password confirmation */}
+          <Accordion
+            expanded={expanded === "panel6"}
+            onChange={handleChange("panel6")}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel4bh-content"
+              id="panel4bh-header"
+              className={classes.backgroundColor}
+            >
+              <Typography className={classes.heading}>
+                Confirm Password
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <TextField
+                id="outlined-basic"
+                label="Confirm your password"
+                variant="outlined"
+                className={classes.root}
+              />
+            </AccordionDetails>
+          </Accordion>
           <CardActions>
             <Button
               disableElevation

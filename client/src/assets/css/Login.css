@@ -1,0 +1,18 @@
+@media (max-width: 600px) {
+  .container {
+    height: 100vh;
+    border: 3px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #282c34 !important;
+    color: white !important;
+  }
+  .MuiCardActions-root {
+    display: flex;
+    padding: 10px 0px !important;
+    align-items: center;
+  }
+}
