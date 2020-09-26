@@ -11,6 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import "../../assets/css/Login.css";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -165,6 +166,13 @@ export default function Register() {
               Login
             </Button>
           </CardActions>
+          <h6 className="text-center">
+            Already registered? then click{" "}
+            <Link exact to="/login">
+              here
+            </Link>{" "}
+            to Login now
+          </h6>
         </CardContent>
       </Card>
     </div>

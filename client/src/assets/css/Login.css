@@ -16,3 +16,9 @@
     align-items: center;
   }
 }
+
+.MuiCardActions-root {
+  display: flex;
+  padding: 10px 0px !important;
+  align-items: center;
+}
