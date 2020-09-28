@@ -1,18 +1,17 @@
-// blogpost.model.js
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// BlogPost Schema
+
+// Create Schema
 const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
-  password: {
+  email: {
     type: String,
     required: true,
   },
-  email: {
+  password: {
     type: String,
     required: true,
   },

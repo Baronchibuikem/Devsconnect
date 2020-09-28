@@ -1,22 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const passport = require("passport");
-const { route } = require("./profile");
 const Profile = require("../../models/Profile");
 
 // Load validation
 const validatePostInput = require("../../validations/post");
 const Post = require("../../models/Post");
-
-// @route   GET api/posts/test
-// @desc    Tests post route
-// @access  Public
-router.get("/test", (req, res) => {
-  res.json({
-    message: "Post Works",
-  });
-});
 
 // @route   GET api/posts
 // @desc    Get all post post

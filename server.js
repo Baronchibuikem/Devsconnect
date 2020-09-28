@@ -1,53 +1,46 @@
-const express = require("express")
-const cors = require("cors")
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
-const dotenv = require('dotenv')
-// const consign = require("consign");
-// const path = require("path")
-const connectDB = require("./db/connection")
-const passport = require('passport')
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const path = require("path");
 
-// importing our routers
-const users = require("./routes/api/users")
-const profile = require("./routes/api/profile")
-const post = require("./routes/api/post")
-
-// load config
-dotenv.config({path: './config/config.env'})
-
-connectDB()
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
+const posts = require("./routes/api/posts");
 
 const app = express();
 
-// Dev logging
-if(process.env.NODE_ENV==='development'){
-    app.use(morgan('dev'))
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// DB Config
+const connectDB = require("./db/connection");
+
+// Connect to MongoDB
+connectDB();
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require("./config/passport")(passport);
+
+// Use Routes
+app.use("/api/users", users);
+app.use("/api/profile", profile);
+app.use("/api/posts", posts);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
-app.use(cors());
-app.use(bodyParser.urlencoded({extended:false}))
-app.use(bodyParser.json())
+const port = process.env.PORT || 5000;
 
-// consign()
-//     .include("models")
-//     .then("routes")
-//     .then("db")
-//     .into(app)
-
-// passport middleware
-app.use(passport.initialize())
-
-// Passport config
-require("./config/passport")(passport)
-
-// use routes
-app.use("/api/users", users)
-app.use("/api/posts", post)
-app.use("/api/profile", profile)
-
-const port = process.env.PORT || 6000
-
-app.listen(port, () => {
-    console.log(`server running in ${process.env.NODE_ENV} on port ${port}`)
-})
+app.listen(port, () => console.log(`Server running on port ${port}`));

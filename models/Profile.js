@@ -1,11 +1,12 @@
 // blogpost.model.js
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 // BlogPost Schema
 const ProfileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
   },
   handle: {
     type: String,
@@ -113,4 +114,4 @@ const ProfileSchema = new Schema({
   },
 });
 
-module.exports = Profile = mongoose.model("Profile", ProfileSchema);
+module.exports = Profile = mongoose.model("profile", ProfileSchema);

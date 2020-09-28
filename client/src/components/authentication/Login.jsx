@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -16,6 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import "../../assets/css/Login.css";
+import { loginUser } from "../../store/actions/authActions";
 
 import { Link } from "react-router-dom";
 
@@ -49,6 +52,18 @@ export default function Login() {
     showPassword: false,
   });
 
+  // Here we are instantiating our dispatch action
+  const dispatch = useDispatch();
+
+  // hooks form
+  const { register, handleSubmit, errors } = useForm();
+
+  // this is used to dispatch a redux action with the neeeded login data
+  const onSubmit = (data) => {
+    console.log("Login Button Clicked", data);
+    dispatch(loginUser({ email: data.email, password: data.password }));
+  };
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -80,91 +95,118 @@ export default function Login() {
         className={classes.root}
         className="container col-md-4 py-5 col-sm-12"
       >
-        <CardContent>
-          <Typography
-            class="text-uppercase text-center font-weight-bold"
-            style={{ fontSize: "20px" }}
-          >
-            Sign In
-          </Typography>
-          <Accordion
-            expanded={expanded === "panel3"}
-            onChange={handleChange("panel3")}
-            className={classes.paddingBottom}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3bh-content"
-              id="panel3bh-header"
-              className={classes.backgroundColor}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
+            <Typography
+              class="text-uppercase text-center font-weight-bold"
+              style={{ fontSize: "20px" }}
             >
-              <Typography className={classes.heading}>Email</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <TextField
-                id="outlined-basic"
-                label="Enter your email here"
-                variant="outlined"
-                className={classes.root}
-              />
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel4"}
-            onChange={handleChange("panel4")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel4bh-content"
-              id="panel4bh-header"
-              className={classes.backgroundColor}
+              Sign In
+            </Typography>
+            <Accordion
+              expanded={expanded === "panel3"}
+              onChange={handleChange("panel3")}
+              className={classes.paddingBottom}
             >
-              <Typography className={classes.heading}>Password</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {/* <TextField
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel3bh-content"
+                id="panel3bh-header"
+                className={classes.backgroundColor}
+              >
+                <Typography className={classes.heading}>Email</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {/* <TextField
+                  id="outlined-basic"
+                  label="Enter your email here"
+                  variant="outlined"
+                  name="email"
+                  className={classes.root}
+                  ref={register({ required: true })}
+                /> */}
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder="Email"
+                  ref={register({ required: true })}
+                />
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel4"}
+              onChange={handleChange("panel4")}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel4bh-content"
+                id="panel4bh-header"
+                className={classes.backgroundColor}
+              >
+                <Typography className={classes.heading}>Password</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {/* <TextField
                 id="outlined-basic"
                 label="Enter your password"
                 variant="outlined"
                 
               /> */}
-              <OutlinedInput
-                className={classes.root}
-                id="outlined-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handlePasswordChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
+                {/* <OutlinedInput
+                  className={classes.root}
+                  id="outlined-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handlePasswordChange("password")}
+                  endAdornment={
+                    <InputAdornment
+                      position="end"
+                      name="password"
+                      ref={register({ required: true })}
                     >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </AccordionDetails>
-          </Accordion>{" "}
-          <CardActions>
-            <Button
-              disableElevation
-              className="mx-auto px-5 col-sm-12 bg-secondary text-light"
-            >
-              Login
-            </Button>
-          </CardActions>
-          <h6 className="text-center">
-            Don't have a registered account? Click{" "}
-            <Link exact to="/register">
-              here
-            </Link>{" "}
-            to Register now
-          </h6>
-        </CardContent>
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                /> */}
+                <input
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Password"
+                  ref={register({ required: true })}
+                />
+              </AccordionDetails>
+            </Accordion>{" "}
+            <CardActions>
+              <Button
+                disableElevation
+                type="submit"
+                className="mx-auto px-5 col-sm-12 bg-secondary text-light"
+              >
+                Login
+              </Button>
+            </CardActions>
+            <h6 className="text-center">
+              Don't have a registered account? Click{" "}
+              <Link exact to="/register">
+                here
+              </Link>{" "}
+              to Register now
+            </h6>
+          </CardContent>
+        </form>
       </Card>
     </div>
   );

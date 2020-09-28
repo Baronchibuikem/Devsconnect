@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const db = require("../config/keys").mongoURI;
 
 // connection to mongodb with mongodb uri defined in our config file
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    const conn = await mongoose.connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
