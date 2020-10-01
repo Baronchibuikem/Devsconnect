@@ -56,10 +56,13 @@ export default function Login() {
               inputRef={register({ required: true })}
               name="email"
               type="email"
-              // helperText={errors.username ? errors.username.message : ''}
-              error={!!errors.username}
               fullWidth
             />
+            <h6 className="text-left font-italic text-danger">
+              {errors.email && errors.email.type === "required" && (
+                <p>Email field is required</p>
+              )}
+            </h6>
             <TextField
               id="outlined-basic"
               label="Enter your password"
@@ -68,10 +71,13 @@ export default function Login() {
               name="password"
               type="password"
               className="my-3"
-              // helperText={errors.username ? errors.username.message : ''}
-              error={!!errors.username}
               fullWidth
             />
+            <h6 className="text-left font-italic text-danger">
+              {errors.password && errors.password.type === "required" && (
+                <p>Password field is required</p>
+              )}
+            </h6>
             <CardActions>
               <Button
                 disableElevation
