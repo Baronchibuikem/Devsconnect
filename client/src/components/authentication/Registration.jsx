@@ -11,7 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import "../../assets/css/Login.css";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../store/actions/authActions";
 import { useSelector, useDispatch } from "react-redux";
