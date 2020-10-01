@@ -1,10 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -89,124 +85,75 @@ export default function Register() {
               Sign up
             </Typography>
             {/* Enter your fullname */}
-            <Accordion
-              expanded={expanded === "panel3"}
-              onChange={handleChange("panel3")}
-              className={classes.paddingBottom}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel3bh-content"
-                id="panel3bh-header"
-                className={classes.backgroundColor}
-              >
-                <Typography className={classes.heading}>Full Name</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  id="outlined-basic"
-                  label="Enter your fullname here"
-                  variant="outlined"
-                  className={classes.root}
-                  inputRef={register}
-                  name="name"
-                  // helperText={errors.username ? errors.username.message : ''}
-                  error={!!errors.username}
-                  fullWidth
-                />
-              </AccordionDetails>
-            </Accordion>
+
+            <Typography className={classes.heading}>Full Name</Typography>
+            <TextField
+              id="outlined-basic"
+              label="Enter your fullname here"
+              variant="outlined"
+              className={classes.root}
+              inputRef={register}
+              name="name"
+              // helperText={errors.username ? errors.username.message : ''}
+              error={!!errors.username}
+              fullWidth
+            />
+
             {/* Enter your email */}
-            <Accordion
-              expanded={expanded === "panel5"}
-              onChange={handleChange("panel5")}
-              className={classes.paddingBottom}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel3bh-content"
-                id="panel3bh-header"
-                className={classes.backgroundColor}
-              >
-                <Typography className={classes.heading}>Email</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  id="outlined-basic"
-                  label="Enter your email here"
-                  variant="outlined"
-                  className={classes.root}
-                  fullWidth
-                  inputRef={register}
-                  name="email"
-                  type="email"
-                />
-              </AccordionDetails>
-            </Accordion>
+
+            <Typography className={classes.heading}>Email</Typography>
+
+            <TextField
+              id="outlined-basic"
+              label="Enter your email here"
+              variant="outlined"
+              className={classes.root}
+              fullWidth
+              inputRef={register}
+              name="email"
+              type="email"
+            />
             {/* Enter your password */}
-            <Accordion
-              expanded={expanded === "panel4"}
-              onChange={handleChange("panel4")}
-              className={classes.paddingBottom}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel4bh-content"
-                id="panel4bh-header"
-                className={classes.backgroundColor}
-              >
-                <Typography className={classes.heading}>Password</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  id="outlined-basic"
-                  label="Enter your password"
-                  variant="outlined"
-                  className={classes.root}
-                  inputRef={register}
-                  name="password"
-                  type="password"
-                />
-              </AccordionDetails>
-            </Accordion>
+
+            <Typography className={classes.heading}>Password</Typography>
+
+            <TextField
+              id="outlined-basic"
+              label="Enter your password"
+              variant="outlined"
+              className={classes.root}
+              inputRef={register}
+              name="password"
+              type="password"
+            />
+
             {/* password confirmation */}
-            <Accordion
-              expanded={expanded === "panel6"}
-              onChange={handleChange("panel6")}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel4bh-content"
-                id="panel4bh-header"
-                className={classes.backgroundColor}
-              >
-                <Typography className={classes.heading}>
-                  Confirm Password
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  id="outlined-basic"
-                  label="Confirm your password"
-                  variant="outlined"
-                  name="password2"
-                  className={classes.root}
-                  // inputRef={register}
-                  inputRef={register({
-                    required: true,
-                    validate: (value) => {
-                      return value === watch("password");
-                    },
-                  })}
-                  type="password"
-                />
-              </AccordionDetails>
-            </Accordion>
+
+            <Typography className={classes.heading}>
+              Confirm Password
+            </Typography>
+
+            <TextField
+              id="outlined-basic"
+              label="Confirm your password"
+              variant="outlined"
+              name="password2"
+              className={classes.root}
+              // inputRef={register}
+              inputRef={register({
+                required: true,
+                validate: (value) => {
+                  return value === watch("password");
+                },
+              })}
+              type="password"
+            />
             <CardActions>
               <Button
                 disableElevation
-                className="mx-auto px-5 col-sm-12 bg-secondary text-light"
+                className="mx-auto px-5 col-sm-12 p-3 text-light"
                 type="submit"
+                style={{ backgroundColor: "green" }}
               >
                 {/* {params.status ? (
                   <div>
