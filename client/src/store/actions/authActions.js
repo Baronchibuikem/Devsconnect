@@ -3,19 +3,37 @@ import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { callApi } from "../api_calls";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./action_types";
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  REGISTRATION_SUCCESSFUL,
+} from "./action_types";
 
-// Register User
-export const registerUser = (userData, history) => (dispatch) => {
-  axios
-    .post("/api/users/register", userData)
-    .then((res) => history.push("/login"))
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
+// Register User action
+export const registerUser = (params) => async (dispatch) => {
+  console.log(params, "registration from redux");
+  const { name, email, password, password2 } = params.data;
+  try {
+    const response = await callApi(
+      "/api/users/register",
+      {
+        name,
+        email,
+        password,
+        password2,
+      },
+      "POST"
     );
+    console.log(response, "Response from the backend");
+    if (response) {
+      dispatch({ type: REGISTRATION_SUCCESSFUL, payload: response.data });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error && error.response && error.response.data,
+    });
+  }
 };
 
 // Login - Get User Token

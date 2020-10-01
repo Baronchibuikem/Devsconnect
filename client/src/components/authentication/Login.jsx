@@ -12,11 +12,6 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import IconButton from "@material-ui/core/IconButton";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import "../../assets/css/Login.css";
 import { loginUser } from "../../store/actions/authActions";
 
@@ -68,18 +63,6 @@ export default function Login() {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const handlePasswordChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
   return (
     <div
       style={{
@@ -117,14 +100,6 @@ export default function Login() {
                 <Typography className={classes.heading}>Email</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {/* <TextField
-                  id="outlined-basic"
-                  label="Enter your email here"
-                  variant="outlined"
-                  name="email"
-                  className={classes.root}
-                  ref={register({ required: true })}
-                /> */}
                 <input
                   type="email"
                   name="email"
@@ -147,44 +122,11 @@ export default function Login() {
                 <Typography className={classes.heading}>Password</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {/* <TextField
-                id="outlined-basic"
-                label="Enter your password"
-                variant="outlined"
-                
-              /> */}
-                {/* <OutlinedInput
-                  className={classes.root}
-                  id="outlined-adornment-password"
-                  type={values.showPassword ? "text" : "password"}
-                  value={values.password}
-                  onChange={handlePasswordChange("password")}
-                  endAdornment={
-                    <InputAdornment
-                      position="end"
-                      name="password"
-                      ref={register({ required: true })}
-                    >
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {values.showPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                /> */}
                 <input
-                  type="password"
+                  type={values.showPassword ? "text" : "password"}
+                  className="form-control fa fa-2x fa-eye"
                   name="password"
-                  className="form-control"
-                  placeholder="Password"
+                  onChange={handleChange("password")}
                   ref={register({ required: true })}
                 />
               </AccordionDetails>
