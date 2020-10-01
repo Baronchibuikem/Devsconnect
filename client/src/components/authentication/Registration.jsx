@@ -45,16 +45,11 @@ export default function Register() {
 
   // This is used to dispatch a redux action with the needed registration data
   const regSubmit = (data) => {
-    console.log(data, "registration data");
-    if (data.password !== data.password2) {
-      console.log("passwords don't match");
-    } else {
-      dispatch(
-        registerUser({
-          data,
-        })
-      );
-    }
+    dispatch(
+      registerUser({
+        data,
+      })
+    );
   };
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -87,17 +82,21 @@ export default function Register() {
             {/* Enter your fullname */}
 
             <Typography className={classes.heading}>Full Name</Typography>
+
             <TextField
               id="outlined-basic"
               label="Enter your fullname here"
               variant="outlined"
               className={classes.root}
-              inputRef={register}
+              inputRef={register({ required: true })}
               name="name"
-              // helperText={errors.username ? errors.username.message : ''}
-              error={!!errors.username}
               fullWidth
             />
+            <h6 className="text-left font-italic text-danger">
+              {errors.name && errors.name.type === "required" && (
+                <p>Full name is required</p>
+              )}
+            </h6>
 
             {/* Enter your email */}
 
@@ -109,10 +108,15 @@ export default function Register() {
               variant="outlined"
               className={classes.root}
               fullWidth
-              inputRef={register}
+              inputRef={register({ required: true })}
               name="email"
               type="email"
             />
+            <h6 className="text-left font-italic text-danger">
+              {errors.email && errors.email.type === "required" && (
+                <p>Email field is required</p>
+              )}
+            </h6>
             {/* Enter your password */}
 
             <Typography className={classes.heading}>Password</Typography>
@@ -122,24 +126,32 @@ export default function Register() {
               label="Enter your password"
               variant="outlined"
               className={classes.root}
-              inputRef={register}
+              inputRef={register({ required: true })}
               name="password"
               type="password"
             />
+            <h6 className="text-left font-italic text-danger">
+              {errors.password && errors.password.type === "required" && (
+                <p>Password field is required</p>
+              )}
+            </h6>
 
             {/* password confirmation */}
 
             <Typography className={classes.heading}>
               Confirm Password
             </Typography>
-
+            <h6 className="text-left font-italic text-danger">
+              {errors.password2 && errors.password2.type === "validate" && (
+                <p>Passwords don't match</p>
+              )}
+            </h6>
             <TextField
               id="outlined-basic"
               label="Confirm your password"
               variant="outlined"
               name="password2"
               className={classes.root}
-              // inputRef={register}
               inputRef={register({
                 required: true,
                 validate: (value) => {
@@ -148,6 +160,11 @@ export default function Register() {
               })}
               type="password"
             />
+            <h6 className="text-left font-italic text-danger">
+              {errors.password2 && errors.password2.type === "required" && (
+                <p>Please confirm your password</p>
+              )}
+            </h6>
             <CardActions>
               <Button
                 disableElevation
