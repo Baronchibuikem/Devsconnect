@@ -12,8 +12,8 @@ import "../../assets/css/Navbar.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../store/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -37,8 +37,15 @@ export default function Navbar() {
   });
 
   const params = useSelector((state) => ({
-    user_authenticated: state.authentication.isAuthenticated,
+    authenticated: state.authentication.isAuthenticated,
   }));
+
+  const dispatch = useDispatch();
+
+  const clickLogout = (e) => {
+    // used to dispatch an action that logs a user out
+    dispatch(logoutUser());
+  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -60,24 +67,44 @@ export default function Navbar() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      {params.user_authenticated ? (
-        <div className="mt-5">
-          <ListItem button>
-            <ListItemIcon></ListItemIcon>
-            <ListItemText>Home</ListItemText>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon></ListItemIcon>
-            <ListItemText>Profile</ListItemText>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon></ListItemIcon>
-            <ListItemText>My poll</ListItemText>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon></ListItemIcon>
-            <ListItemText>Logout</ListItemText>
-          </ListItem>
+      {params.authenticated ? (
+        <div style={{ marginTop: "100px" }}>
+          <Link
+            exact
+            to="/"
+            className="text-light pollhover text-decoration-none"
+          >
+            <ListItem button>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText>Home</ListItemText>
+            </ListItem>
+          </Link>
+          <hr className="bg-light" />
+          <Link
+            exact
+            to="/profile"
+            className="text-light pollhover text-decoration-none"
+          >
+            <ListItem button>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText>Profile</ListItemText>
+            </ListItem>
+          </Link>
+          <hr className="bg-light" />
+          <Link className="text-light pollhover text-decoration-none">
+            <ListItem button>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText>My Post</ListItemText>
+            </ListItem>
+          </Link>
+          <hr className="bg-light" />
+          <Link className="text-light pollhover text-decoration-none">
+            <ListItem button>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText onClick={clickLogout}>Logout</ListItemText>
+            </ListItem>
+          </Link>
+          <hr className="bg-light" />
         </div>
       ) : (
         <div className="mt-5">
@@ -133,9 +160,6 @@ export default function Navbar() {
         <Typography variant="h6" className="mr-auto ml-3 content-size">
           Welcome to Developer Connect (DevCon)
         </Typography>
-        {/* <Typography variant="h6" class="d-sm-none">
-          Best community(Devs)
-        </Typography> */}
       </Toolbar>
     </AppBar>
   );

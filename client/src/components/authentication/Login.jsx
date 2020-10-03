@@ -8,9 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "../../assets/css/Login.css";
+import { Link, Redirect } from "react-router-dom";
 import { loginUser } from "../../store/actions/authActions";
-
-import { Link } from "react-router-dom";
 
 export default function Login() {
   // Here we are instantiating our dispatch action
@@ -26,8 +25,12 @@ export default function Login() {
 
   const params = useSelector((state) => ({
     errors: state.error_reducer.error,
+    isAuthenticated: state.authentication.isAuthenticated,
   }));
 
+  if (params.isAuthenticated === true) {
+    return <Redirect to="/" />;
+  }
   return (
     <div
       style={{

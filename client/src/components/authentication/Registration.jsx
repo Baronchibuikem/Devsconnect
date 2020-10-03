@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -7,7 +7,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import "../../assets/css/Login.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../store/actions/authActions";
 import { useSelector, useDispatch } from "react-redux";
@@ -52,9 +52,13 @@ export default function Register() {
     );
   };
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+  const params = useSelector((state) => ({
+    authenticated: state.authentication.isAuthenticated,
+  }));
+  // Here we are checking if our authenticated value from the state is true, it yes we redirect to the homepage
+  if (params.authenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div

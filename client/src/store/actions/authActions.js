@@ -1,16 +1,11 @@
 import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { callApi } from "../api_calls";
-
-import {
-  GET_ERRORS,
-  SET_CURRENT_USER,
-  REGISTRATION_SUCCESSFUL,
-} from "./action_types";
+import axios from "axios";
+import { GET_ERRORS, SET_CURRENT_USER } from "./action_types";
 
 // Register User action
 export const registerUser = (params) => async (dispatch) => {
-  console.log(params, "registration from redux");
   const { name, email, password, password2 } = params.data;
   try {
     const response = await callApi(
@@ -23,9 +18,8 @@ export const registerUser = (params) => async (dispatch) => {
       },
       "POST"
     );
-    console.log(response, "Response from the backend");
     if (response) {
-      dispatch({ type: REGISTRATION_SUCCESSFUL, payload: response.data });
+      dispatch({ type: SET_CURRENT_USER, payload: response.data });
     }
   } catch (error) {
     dispatch({
@@ -36,28 +30,31 @@ export const registerUser = (params) => async (dispatch) => {
 };
 
 // Login - Get User Token
-export const loginUser = (userData) => async (dispatch) => {
-  const { email, password } = userData;
-  try {
-    const res = await callApi("/api/users/login", { email, password }, "POST");
-    if (res.status === 200) {
-      // Save to localStorage
-      const { token } = res.data;
-      // Set token to ls
-      localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
-      // Set current user
-      dispatch(setCurrentUser(decoded));
+export const loginUser = (userData) => {
+  return async (dispatch) => {
+    const { email, password } = userData;
+    try {
+      const res = await axios.post("/api/users/login", { email, password });
+      console.log(res, "response from login action success");
+      if (res.status === 200) {
+        // Save to localStorage
+        const { token } = res.data;
+        // Set token to ls
+        localStorage.setItem("jwtToken", token);
+        // Set token to Auth header
+        setAuthToken(token);
+        // Decode token to get user data
+        const decoded = jwt_decode(token);
+        // Set current user
+        dispatch(setCurrentUser(decoded));
+      }
+    } catch (err) {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err && err.response && err.response.data,
+      });
     }
-  } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err && err.response && err.response.data,
-    });
-  }
+  };
 };
 
 // Set logged in user

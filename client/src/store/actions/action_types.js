@@ -13,3 +13,4 @@ export const GET_POST = "GET_POST";
 export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
 export const REGISTRATION_SUCCESSFUL = "REGISTRATION_SUCCESSFUL";
+export const SET_USER_TOKEN = "SET_USER_TOKEN";
