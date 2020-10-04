@@ -2,7 +2,7 @@ import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { callApi } from "../api_calls";
 import axios from "axios";
-import { GET_ERRORS, SET_CURRENT_USER } from "./action_types";
+import { GET_ERRORS, SET_CURRENT_USER, SET_USER_TOKEN } from "./action_types";
 
 // Register User action
 export const registerUser = (params) => async (dispatch) => {
@@ -40,11 +40,13 @@ export const loginUser = (userData) => {
         // Save to localStorage
         const { token } = res.data;
         // Set token to ls
-        localStorage.setItem("jwtToken", token);
+        dispatch({ type: SET_USER_TOKEN, payload: token });
+        // localStorage.setItem("jwtToken", token);
         // Set token to Auth header
-        setAuthToken(token);
+        // setAuthToken(token);
         // Decode token to get user data
         const decoded = jwt_decode(token);
+        // console.log(decoded, "decoded");
         // Set current user
         dispatch(setCurrentUser(decoded));
       }

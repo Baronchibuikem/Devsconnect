@@ -7,6 +7,7 @@ import PrivateRoute from "./components/common_pages/PrivateRoute";
 import Profile from "./components/profile/Profile";
 import Experience from "./components/profile/Experience";
 import Education from "./components/profile/Education";
+import Posts from "./components/posts/Posts";
 
 const BaseRouter = () => (
   <Switch>
@@ -16,6 +17,7 @@ const BaseRouter = () => (
     <PrivateRoute exact path="/profile" component={Profile} />
     <PrivateRoute exact path="/experience" component={Experience} />
     <PrivateRoute exact path="/education" component={Education} />
+    <PrivateRoute exact path="/post" component={Posts} />
     {/* <PrivateRoute exact path="/:id" component={singlePoll} /> */}
   </Switch>
 );

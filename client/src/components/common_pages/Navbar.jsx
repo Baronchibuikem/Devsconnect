@@ -38,6 +38,7 @@ export default function Navbar() {
 
   const params = useSelector((state) => ({
     authenticated: state.authentication.isAuthenticated,
+    user: state.authentication.user,
   }));
 
   const dispatch = useDispatch();
@@ -69,11 +70,7 @@ export default function Navbar() {
     >
       {params.authenticated ? (
         <div style={{ marginTop: "100px" }}>
-          <Link
-            exact
-            to="/"
-            className="text-light pollhover text-decoration-none"
-          >
+          <Link to="/" className="text-light pollhover text-decoration-none">
             <ListItem button>
               <ListItemIcon></ListItemIcon>
               <ListItemText>Home</ListItemText>
@@ -81,7 +78,6 @@ export default function Navbar() {
           </Link>
           <hr className="bg-light" />
           <Link
-            exact
             to="/profile"
             className="text-light pollhover text-decoration-none"
           >
@@ -91,10 +87,13 @@ export default function Navbar() {
             </ListItem>
           </Link>
           <hr className="bg-light" />
-          <Link className="text-light pollhover text-decoration-none">
+          <Link
+            to="/post"
+            className="text-light pollhover text-decoration-none"
+          >
             <ListItem button>
               <ListItemIcon></ListItemIcon>
-              <ListItemText>My Post</ListItemText>
+              <ListItemText>Posts Feed</ListItemText>
             </ListItem>
           </Link>
           <hr className="bg-light" />
@@ -109,7 +108,6 @@ export default function Navbar() {
       ) : (
         <div className="mt-5">
           <Link
-            exact
             to="/register"
             className="pollhover text-light text-decoration-none"
           >
@@ -158,7 +156,7 @@ export default function Navbar() {
           </React.Fragment>
         ))}
         <Typography variant="h6" className="mr-auto ml-3 content-size">
-          Welcome to Developer Connect (DevCon)
+          Hi {params.user.name} {""} welcome to Developer Connect (DevCon)
         </Typography>
       </Toolbar>
     </AppBar>
