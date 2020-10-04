@@ -12,7 +12,8 @@ const Post = require("../../models/Post");
 // @access  Public
 router.get("/", (req, res) => {
   Post.find()
-    .sort({ date: -1 })
+    .sort({ date: 1 })
+    .populate("user", "name")
     .then((posts) => {
       res.json(posts);
     })

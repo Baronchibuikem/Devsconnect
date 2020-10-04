@@ -97,12 +97,12 @@ export default function Navbar() {
             </ListItem>
           </Link>
           <hr className="bg-light" />
-          <Link className="text-light pollhover text-decoration-none">
+          <div className="text-light pollhover text-decoration-none">
             <ListItem button>
               <ListItemIcon></ListItemIcon>
               <ListItemText onClick={clickLogout}>Logout</ListItemText>
             </ListItem>
-          </Link>
+          </div>
           <hr className="bg-light" />
         </div>
       ) : (

@@ -35,15 +35,11 @@ export const loginUser = (userData) => {
     const { email, password } = userData;
     try {
       const res = await axios.post("/api/users/login", { email, password });
-      console.log(res, "response from login action success");
       if (res.status === 200) {
         // Save to localStorage
         const { token } = res.data;
-        // Set token to ls
+        // Set token to local storage
         dispatch({ type: SET_USER_TOKEN, payload: token });
-        // localStorage.setItem("jwtToken", token);
-        // Set token to Auth header
-        // setAuthToken(token);
         // Decode token to get user data
         const decoded = jwt_decode(token);
         // console.log(decoded, "decoded");

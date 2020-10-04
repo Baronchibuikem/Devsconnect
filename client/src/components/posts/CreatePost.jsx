@@ -3,12 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import { addPost } from "../../store/actions/postActions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Button from "@material-ui/core/Button";
 
 const CreatePost = () => {
   // Here we are instantiating our dispatch action
   const dispatch = useDispatch();
+
+  const params = useSelector((state) => ({
+    error: state.error_reducer.error,
+    loading: state.postreducer.loading,
+  }));
 
   // hooks form
   const { register, handleSubmit, errors } = useForm();
@@ -24,7 +30,7 @@ const CreatePost = () => {
         <div className="card card-info">
           <div className="card-header bg-info text-white">Say Something...</div>
           <div className="card-body">
-            <div class="card-text">
+            <div className="card-text">
               <form onSubmit={handleSubmit(createpost)}>
                 <TextField
                   id="outlined-basic"
@@ -41,13 +47,16 @@ const CreatePost = () => {
                     <p>This field is required</p>
                   )}
                 </h6>
+                <h6 className="text-left font-italic text-danger">
+                  {params.error ? params.error.text : ""}
+                </h6>
                 <Button
                   disableElevation
                   type="submit"
                   style={{ backgroundColor: "green" }}
                   className="px-5 col-sm-12 text-light p-3 mt-3"
                 >
-                  Submit
+                  {!params.loading ? "Submit" : "Loading..."}
                 </Button>
               </form>
             </div>

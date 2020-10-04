@@ -4,6 +4,7 @@ import {
   GET_POST,
   DELETE_POST,
   POST_LOADING,
+  DISABLE_LOADING,
 } from "../actions/action_types";
 
 const initialState = {
@@ -18,6 +19,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case DISABLE_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
     case GET_POSTS:
       return {
@@ -35,6 +41,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         posts: [action.payload, ...state.posts],
+        loading: false,
       };
     case DELETE_POST:
       return {

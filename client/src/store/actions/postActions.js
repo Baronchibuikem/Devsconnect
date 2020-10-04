@@ -9,25 +9,14 @@ import {
   GET_POST,
   POST_LOADING,
   DELETE_POST,
+  DISABLE_LOADING,
 } from "./action_types";
-
-// const getToken = (data) => {
-//   const {token} = data
-//   try {
-//     if(token){
-//       return hea
-//     }
-//   } catch (error) {
-
-//   }
-// }
 
 // Add Post
 export const addPost = (postData) => (dispatch, getState) => {
-  // const token = getState().authentication.token;
   const token = getState().authentication.token;
   const userToken = (axios.defaults.headers.common["Authorization"] = token);
-  // console.log(config.headers);
+  dispatch(setPostLoading());
   dispatch(clearErrors());
   axios
     .post("/api/posts", { text: postData }, userToken)
@@ -46,41 +35,40 @@ export const addPost = (postData) => (dispatch, getState) => {
 };
 
 // Get Posts
-export const getPosts = () => (dispatch) => {
+export const getPosts = () => async (dispatch) => {
   dispatch(setPostLoading());
-  axios
-    .get("/api/posts")
-    .then((res) =>
-      dispatch({
-        type: GET_POSTS,
-        payload: res.data,
-      })
-    )
-    .catch((err) =>
-      dispatch({
-        type: GET_POSTS,
-        payload: null,
-      })
-    );
+  dispatch(clearErrors());
+  const res = await axios.get("/api/posts");
+  console.log(res.data, "Get Post");
+  try {
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_POSTS,
+      payload: null,
+    });
+  }
 };
 
 // Get Post
-export const getPost = (id) => (dispatch) => {
+export const getPost = (id) => async (dispatch) => {
   dispatch(setPostLoading());
-  axios
-    .get(`/api/posts/${id}`)
-    .then((res) =>
-      dispatch({
-        type: GET_POST,
-        payload: res.data,
-      })
-    )
-    .catch((err) =>
-      dispatch({
-        type: GET_POST,
-        payload: null,
-      })
-    );
+  const res = await axios.get(`/api/posts/${id}`);
+  console.log(res.data, "get post");
+  try {
+    dispatch({
+      type: GET_POST,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_POST,
+      payload: null,
+    });
+  }
 };
 
 // Delete Post
@@ -168,6 +156,13 @@ export const deleteComment = (postId, commentId) => (dispatch) => {
 export const setPostLoading = () => {
   return {
     type: POST_LOADING,
+  };
+};
+
+// Disable loading state
+export const disablePostLoading = () => {
+  return {
+    type: DISABLE_LOADING,
   };
 };
 
