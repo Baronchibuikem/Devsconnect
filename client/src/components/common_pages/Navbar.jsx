@@ -88,7 +88,7 @@ export default function Navbar() {
           </Link>
           <hr className="bg-light" />
           <Link
-            to="/post"
+            to="/posts"
             className="text-light pollhover text-decoration-none"
           >
             <ListItem button>

@@ -180,8 +180,8 @@ router.post(
         const newComment = {
           text: req.body.text,
           name: req.body.name,
-          avatar: req.body.avatar,
-          user: req.user.id,
+          // avatar: req.body.avatar,
+          user: req.user.name,
         };
 
         // Add to comments array

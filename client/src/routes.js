@@ -8,6 +8,7 @@ import Profile from "./components/profile/Profile";
 import Experience from "./components/profile/Experience";
 import Education from "./components/profile/Education";
 import Posts from "./components/posts/Posts";
+import SinglePost from "./components/posts/SinglePost";
 
 const BaseRouter = () => (
   <Switch>
@@ -17,7 +18,8 @@ const BaseRouter = () => (
     <PrivateRoute exact path="/profile" component={Profile} />
     <PrivateRoute exact path="/experience" component={Experience} />
     <PrivateRoute exact path="/education" component={Education} />
-    <PrivateRoute exact path="/post" component={Posts} />
+    <PrivateRoute exact path="/posts" component={Posts} />
+    <PrivateRoute exact path="/post/:id" component={SinglePost} />
     {/* <PrivateRoute exact path="/:id" component={singlePoll} /> */}
   </Switch>
 );

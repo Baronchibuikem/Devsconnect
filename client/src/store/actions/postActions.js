@@ -116,10 +116,17 @@ export const removeLike = (id) => (dispatch) => {
 };
 
 // Add Comment
-export const addComment = (postId, commentData) => (dispatch) => {
+export const addComment = (params) => (dispatch, getState) => {
+  // we get the current token from the state and add it to our authorization header
+  const token = getState().authentication.token;
+  const userToken = (axios.defaults.headers.common["Authorization"] = token);
   dispatch(clearErrors());
   axios
-    .post(`/api/posts/comment/${postId}`, commentData)
+    .post(
+      `/api/posts/comment/${params.postId}`,
+      { text: params.comment },
+      userToken
+    )
     .then((res) =>
       dispatch({
         type: GET_POST,
