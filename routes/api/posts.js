@@ -40,7 +40,11 @@ router.get("/:id", (req, res) => {
       },
     })
     .then((post) => {
-      res.json(post);
+      if (post) {
+        res.json(post);
+      } else {
+        res.status(404).json({ nopostfound: "No post found with that ID" });
+      }
     })
     .catch((err) =>
       res.status(404).json({ PostNotFound: "Couldn't get the requested post" })
@@ -64,7 +68,7 @@ router.post(
     const newPost = new Post({
       text: req.body.text,
       name: req.body.name,
-      avatar: req.body.avatar,
+      // avatar: req.body.avatar,
       user: req.user.id,
     });
 
@@ -177,21 +181,20 @@ router.post(
   "/comment/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validatePostInput(req.body);
+    // const { errors, isValid } = validatePostInput(req.body);
 
-    // Check Validation
-    if (!isValid) {
-      // If any errors, send 400 with errors object
-      return res.status(400).json(errors);
-    }
+    // // Check Validation
+    // if (!isValid) {
+    //   // If any errors, send 400 with errors object
+    //   return res.status(400).json(errors);
+    // }
 
     Post.findById(req.params.id)
       .then((post) => {
         const newComment = {
           text: req.body.text,
-          name: req.body.name,
           // avatar: req.body.avatar,
-          user: req.user.name,
+          user: req.user.id,
         };
 
         // Add to comments array
