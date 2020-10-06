@@ -3,10 +3,10 @@ import React from "react";
 const PostItem = (props) => {
   const { text, user } = props.post;
   return (
-    <div className="mt-5  py-5 bg-light">
+    <div className="py-5 bg-light">
       <h6>
         Posted by: {""}
-        {user}
+        {user.name}
       </h6>
       <hr />
       <p>{text}</p>

@@ -57,7 +57,7 @@ export const getPosts = () => async (dispatch) => {
 export const getPost = (id) => async (dispatch) => {
   dispatch(setPostLoading());
   const res = await axios.get(`/api/posts/${id}`);
-  console.log(res.data, "get post");
+  console.log(res.data, "get single post");
   try {
     dispatch({
       type: GET_POST,

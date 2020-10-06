@@ -29,6 +29,16 @@ router.get("/", (req, res) => {
 // @access  Public
 router.get("/:id", (req, res) => {
   Post.findById(req.params.id)
+    // for populating a user when a single blog is displayed
+    .populate("user", "name")
+    // for getting the name of the user from the list of comments posted
+    .populate({
+      path: "comments", // populate comments
+      populate: {
+        path: "user", // in comments, populate the user
+        select: { name: 1 }, //select just the name key from the populated users
+      },
+    })
     .then((post) => {
       res.json(post);
     })
@@ -65,7 +75,7 @@ router.post(
 // @route   Delete api/post/:id
 // @desc    Delete a post
 // @access  Private
-router.get(
+router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {

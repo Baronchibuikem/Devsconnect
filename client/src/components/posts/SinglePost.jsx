@@ -5,6 +5,7 @@ import Spinner from "../common_pages/Spinner";
 import CommentForm from "../comments/CommentForm";
 import CommentFeed from "../comments/CommentFeed";
 import PostItem from "./PostItem";
+import { Link } from "react-router-dom";
 
 function SinglePost({ match }) {
   const state = useSelector((state) => ({
@@ -26,6 +27,9 @@ function SinglePost({ match }) {
         <Spinner />
       ) : (
         <div className="mt-5 pt-5">
+          <Link to="/posts" className="text-success">
+            Back to Posts
+          </Link>
           <PostItem post={post} />
           <CommentForm postId={post._id} />
           <CommentFeed postId={post._id} comments={post.comments} />

@@ -8,8 +8,8 @@ const CommentFeed = (props) => {
     <div>
       {comments.map((comment) => {
         return (
-          <div className="mt-2">
-            <h6>{comment.user}</h6>
+          <div className="mt-2" key={comment._id}>
+            <h6>{comment.user.name}</h6>
             <p>{comment.text}</p>
             <hr />
           </div>
