@@ -56,7 +56,6 @@ export const getPosts = () => async (dispatch) => {
 // Get Post
 export const getPost = (id) => async (dispatch) => {
   dispatch(setPostLoading());
-
   try {
     const res = await axios.get(`/api/posts/${id}`);
     console.log(res.data, "get single post");
@@ -90,30 +89,40 @@ export const deletePost = (id) => (dispatch) => {
     );
 };
 
-// Add Like
-export const addLike = (id) => (dispatch) => {
-  axios
-    .post(`/api/posts/like/${id}`)
-    .then((res) => dispatch(getPosts()))
-    .catch((err) =>
+export const postLike = (id) => {
+  return async (dispatch, getState) => {
+    dispatch(setPostLoading());
+    const token = getState().authentication.token;
+    const userToken = (axios.defaults.headers.common["Authorization"] = token);
+    try {
+      const res = await axios.post(`/api/posts/like/${id}`, userToken);
+      dispatch(getPosts());
+    } catch (error) {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+        payload: error.response.data,
+      });
+    }
+  };
 };
 
 // Remove Like
-export const removeLike = (id) => (dispatch) => {
-  axios
-    .post(`/api/posts/unlike/${id}`)
-    .then((res) => dispatch(getPosts()))
-    .catch((err) =>
+export const removeLike = (id) => {
+  return async (dispatch, getState) => {
+    const token = getState().authentication.token;
+    const userToken = (axios.defaults.headers.common["Authorization"] = token);
+    try {
+      const res = await axios.post(`/api/posts/unlike/${id}`, userToken);
+      if (res) {
+        dispatch(getPosts());
+      }
+    } catch (error) {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+        payload: error.response.data,
+      });
+    }
+  };
 };
 
 // Add Comment

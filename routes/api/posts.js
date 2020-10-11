@@ -5,6 +5,7 @@ const Profile = require("../../models/Profile");
 
 // Load validation
 const validatePostInput = require("../../validations/post");
+const validateCommentInput = require("../../validations/comment");
 const Post = require("../../models/Post");
 
 // @route   GET api/posts
@@ -122,7 +123,7 @@ router.post(
           ) {
             return res
               .status(400)
-              .json({ alreadyliked: "User already liked this post" });
+              .json({ alreadyliked: "You've already liked this post" });
           }
 
           // Add user id to likes array
@@ -181,19 +182,20 @@ router.post(
   "/comment/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // const { errors, isValid } = validatePostInput(req.body);
+    const { errors, isValid } = validatePostInput(req.body);
 
-    // // Check Validation
-    // if (!isValid) {
-    //   // If any errors, send 400 with errors object
-    //   return res.status(400).json(errors);
-    // }
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
 
     Post.findById(req.params.id)
       .then((post) => {
         const newComment = {
           text: req.body.text,
-          // avatar: req.body.avatar,
+          name: req.body.name,
+          avatar: req.body.avatar,
           user: req.user.id,
         };
 
@@ -206,7 +208,6 @@ router.post(
       .catch((err) => res.status(404).json({ postnotfound: "No post found" }));
   }
 );
-
 // @route   DELETE api/posts/comment/:id/:comment_id
 // @desc    Remove comment from post
 // @access  Private

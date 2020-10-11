@@ -64,6 +64,9 @@ router.post(
     if (req.body.handle) {
       profileFields.handle = req.body.handle;
     }
+    if (req.body.status) {
+      profileFields.status = req.body.status;
+    }
     if (req.body.company) {
       profileFields.company = req.body.company;
     }

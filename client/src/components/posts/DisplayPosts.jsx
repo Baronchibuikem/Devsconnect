@@ -1,25 +1,39 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getPosts, getPost } from "../../store/actions/postActions";
+import {
+  getPosts,
+  removeLike,
+  postLike,
+} from "../../store/actions/postActions";
 import Spinner from "../common_pages/Spinner";
 
 const DisplayPost = () => {
-  let dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getPosts());
-  }, []);
-
   const params = useSelector((state) => ({
     allposts: state.postreducer.posts,
     user: state.authentication.user,
-    loading: state.authentication.loading,
+    loading: state.postreducer.loading,
+    error: state.error_reducer.error,
   }));
+
+  const dispatch = useDispatch();
 
   // const viewPost = (id) => {
   //   dispatch(getPost(id));
   // };
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
+  // liking a comment
+  const likePost = (id) => {
+    dispatch(postLike(id));
+  };
+
+  // unliking a comment
+  const unlikePost = (id) => {
+    dispatch(removeLike(id));
+  };
   return (
     <div>
       {params.allposts === null || params.loading ? (
@@ -36,21 +50,36 @@ const DisplayPost = () => {
               </div>
             </div>
             <hr />
-
             <span className="py-3">
-              <button type="button" className="btn btn-light mr-1">
+              <button
+                type="button"
+                className="btn btn-light mr-1"
+                onClick={() => {
+                  likePost(post._id);
+                }}
+              >
+                {post && post.likes ? post.likes.length : ""}
                 <i className="fas fa-thumbs-up" />
                 <span className="badge badge-light"></span>
               </button>
-              <button type="button" className="btn btn-light mr-1">
+
+              <button
+                type="button"
+                className="btn btn-light mr-1"
+                onClick={() => {
+                  unlikePost(post._id);
+                }}
+              >
+                {post && post.unlikes ? post.unlikes.length : ""}
                 <i className="text-secondary fas fa-thumbs-down" />
               </button>
               <Link to={`/post/${post._id}`}>
                 <button className="shadow btn btn-form btn-info">
-                  Comments
+                  {post && post.comments ? post.comments.length : ""} Comments
                 </button>
               </Link>
-            </span>
+            </span>{" "}
+            <span className="text-danger m-2"></span>
           </div>
         ))
       )}
