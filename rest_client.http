@@ -31,7 +31,7 @@ content-type: application/json
 # For making a post request to the profile route
 POST http://localhost:5000/api/profile
 Content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNWYyN2MyMmU1MWViMGU3MDAxMzVjYSIsIm5hbWUiOiJtaWNoZWFsIiwiaWF0IjoxNjAwODAzODk5LCJleHAiOjE2MDE0MDg2OTl9.0OOqx4MVIYbsv2nPxLlSttm6ZE1wure1v9EBRDQDf4k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNzU4ZWVmMzRkYzdjMzJkY2FhYTViZCIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjAyNTE4NzA5LCJleHAiOjE2MDI1NDAzMDl9.e5buV6sC5-D1jHzDTjfeti_xpj7NmIiuzNqyyiJ3Kas
 
 {
     "handle": "favouristic",

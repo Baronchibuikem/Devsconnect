@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import "../../assets/css/Dashboard.css";
-import GetUserProfile from "./GetProfile";
-import GetUserEducation from "./GetEducation";
-import GetUserExperience from "./GetExperience";
-import { getCurrentProfile } from "../../store/actions/profileActions";
-import { useSelector, useDispatch } from "react-redux";
+import Education from "./Education";
+import Profile from "./Profile";
+import Experience from "./Experience";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,23 +13,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavTabs() {
+export default function ProfileIndex() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const dispatch = useDispatch();
-
-  const params = useSelector((state) => ({
-    profile: state.profilereducer.profile,
-  }));
-
-  useEffect(() => {
-    dispatch(getCurrentProfile());
-  }, [dispatch]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <section id="tabs" className="project-tab mt-5 pt-5">
@@ -86,7 +69,7 @@ export default function NavTabs() {
                 role="tabpanel"
                 aria-labelledby="nav-home-tab"
               >
-                <GetUserProfile profile={params.profile} />
+                <Profile />
               </div>
               <div
                 className="tab-pane fade"
@@ -94,7 +77,7 @@ export default function NavTabs() {
                 role="tabpanel"
                 aria-labelledby="nav-profile-tab"
               >
-                <GetUserExperience experience={params.profile} />
+                <Experience />
               </div>
               <div
                 className="tab-pane fade"
@@ -102,7 +85,7 @@ export default function NavTabs() {
                 role="tabpanel"
                 aria-labelledby="nav-contact-tab"
               >
-                <GetUserEducation education={params.profile} />
+                <Education />
               </div>
             </div>
           </div>

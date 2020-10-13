@@ -63,8 +63,8 @@ function Profile() {
 
   return (
     <div className="pt-5 mt-5">
-      <div className="mx-auto col-md-4">
-        <h5 className="text-uppercase text-center font-weight-bold mt-5">
+      <div className="mx-auto">
+        <h5 className="text-uppercase text-center font-weight-bold">
           Update your profile
         </h5>
         <hr />
@@ -137,7 +137,7 @@ function Profile() {
               Status
             </InputLabel>
 
-            <select ref={register} name="status" className="form-control m-2">
+            <select ref={register} name="status" className="form-control my-2">
               {status.map((item) => (
                 <option key={item.value} value={item.value} name="status">
                   {item.label}
@@ -203,7 +203,9 @@ function Profile() {
                   Close Social Network Links
                 </Button>
               ) : (
-                <Button onClick={addLink}>Add Social Network Links</Button>
+                <Button onClick={addLink} className="text-success">
+                  Add Social Network Links
+                </Button>
               )}
 
               <span className="mt-1 ml-2">Optional</span>

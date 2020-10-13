@@ -11,16 +11,19 @@ import {
 import createHistory from "history/createHashHistory";
 
 // Get current profile
-export const getCurrentProfile = () => (dispatch) => {
+export const getCurrentProfile = () => (dispatch, getState) => {
+  const token = getState().authentication.token;
+  const userToken = (axios.defaults.headers.common["Authorization"] = token);
   dispatch(setProfileLoading());
   axios
-    .get("/api/profile")
-    .then((res) =>
+    .get("/api/profile", userToken)
+    .then((res) => {
+      console.log("get current user", res.data);
       dispatch({
         type: GET_PROFILE,
         payload: res.data,
-      })
-    )
+      });
+    })
     .catch((err) =>
       dispatch({
         type: GET_PROFILE,
@@ -49,8 +52,7 @@ export const getProfileByHandle = (handle) => (dispatch) => {
 };
 
 // Create Profile
-export const createProfile = (profileData, history) => {
-  console.log(profileData, "profile data");
+export const createProfile = (profileData) => {
   return async (dispatch, getState) => {
     // dispatch(setPostLoading());
     const token = await getState().authentication.token;
@@ -61,41 +63,50 @@ export const createProfile = (profileData, history) => {
         profileData.data,
         userToken
       );
-      console.log(response, "response");
     } catch (error) {
-      // dispatch({
-      //   type: GET_ERRORS,
-      //   payload: error.response.data,
-      // });
-      console.log(error.response.data);
+      dispatch({
+        type: GET_ERRORS,
+        payload: error.response.data,
+      });
+      // console.log(error.response.data);
     }
   };
 };
 
 // Add experience
-export const addExperience = (expData, history) => (dispatch) => {
-  axios
-    .post("/api/profile/experience", expData)
-    .then((res) => history.push("/dashboard"))
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
+export const addExperience = (expData) => async (dispatch, getState) => {
+  const token = await getState().authentication.token;
+  const userToken = (axios.defaults.headers.common["Authorization"] = token);
+  try {
+    const response = await axios.post(
+      "/api/profile/experience",
+      expData.data,
+      userToken
     );
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
 };
 
 // Add education
-export const addEducation = (eduData, history) => (dispatch) => {
-  axios
-    .post("/api/profile/education", eduData)
-    .then((res) => history.push("/dashboard"))
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
+export const addEducation = (eduData) => async (dispatch, getState) => {
+  const token = await getState().authentication.token;
+  const userToken = (axios.defaults.headers.common["Authorization"] = token);
+  try {
+    const response = await axios.post(
+      "/api/profile/education",
+      eduData.data,
+      userToken
     );
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
 };
 
 // Delete Experience
