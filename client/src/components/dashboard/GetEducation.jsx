@@ -22,11 +22,11 @@ export default function GetEducation(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>School</TableCell>
-            <TableCell>Field of study</TableCell>
-            <TableCell>Degress</TableCell>
-            <TableCell>Started</TableCell>
-            <TableCell>Ended</TableCell>
+            <TableCell>SCHOOL</TableCell>
+            <TableCell>FIELD OD STUDY</TableCell>
+            <TableCell>DEGREE</TableCell>
+            <TableCell>STARTED</TableCell>
+            <TableCell>ENDED</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

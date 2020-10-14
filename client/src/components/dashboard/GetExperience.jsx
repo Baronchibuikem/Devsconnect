@@ -22,9 +22,9 @@ export default function GetExperience(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Job Title</TableCell>
-            <TableCell>Organization</TableCell>
-            <TableCell>Date you left</TableCell>
+            <TableCell>JOB TITLE</TableCell>
+            <TableCell>ORGANIZATION</TableCell>
+            <TableCell>DATE YOU LEFT</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
